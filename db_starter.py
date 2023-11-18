@@ -28,7 +28,8 @@ def create_table(config_file, table_dir):
 
     # preparing a cursor object
     cursor_object = data_base.cursor()
-    
+
+    # Inserting the sql commands one by one
     for table_sql_file in os.listdir(table_dir):
         with open(table_dir+table_sql_file, "r") as f:
             table_query = f.read()

@@ -92,37 +92,31 @@ def insert_table(store_dir, game_dir, config_file, store_table, games_table, sto
         dic_tuples_games, dic_tuples_store_game = \
            read_games_csv_file(game_dir + game_csv_file, dic_tuples_games, dic_tuples_store_game)
         
-
+    # Populate store table
     for store_id in dic_tuples_store:
         cursor_object.execute("INSERT INTO "+store_table+" (store_id, store_name, website, city, address)"
                                 "values (%s, %s, %s, %s, %s)", (dic_tuples_store[store_id]))
     
-    print("PASS")
-    
+    # Populate store_hours table
     for store_id in dic_tuples_store_hours:
         for day_hour in dic_tuples_store_hours[store_id]:
             cursor_object.execute("INSERT INTO "+store_hours_table+" (store_id, weekday, open_time, close_time)"
                                     "values (%s, %s, %s, %s)", (day_hour))
-    
-    print("PASS")
 
+    # Populate user table
     for user_id in dic_tuples_user:
         cursor_object.execute("INSERT INTO "+user_table+" (user_id, store_id, first_name, last_name, email)"
                                 "values (%s, %s, %s, %s, %s)", (dic_tuples_user[user_id]))
-    
-    print("PASS")
         
+    # Populate games table
     for game_id in dic_tuples_games:
         cursor_object.execute("INSERT INTO "+games_table+" (game_id, game_name, release_date, genre, num_of_players, type_of_machine)"
                                 "values (%s, %s, %s, %s, %s, %s)", (dic_tuples_games[game_id]))
-    
-    print("PASS")
         
+    # Populate store_game table
     for store_id in dic_tuples_store_game:
         cursor_object.execute("INSERT INTO "+store_game_table+" (store_id, game_id, game_cost)"
                                 "values (%s, %s, %s)", (dic_tuples_store_game[store_id]))
-    
-    print("PASS")
 
     data_base.commit()
     cursor_object.close()
