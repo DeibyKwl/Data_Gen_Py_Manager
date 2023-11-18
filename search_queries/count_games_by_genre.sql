@@ -1,0 +1,3 @@
+SELECT genre, COUNT(*) FROM games
+GROUP BY genre
+ORDER BY COUNT(*);
