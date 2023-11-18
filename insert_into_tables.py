@@ -37,7 +37,7 @@ def read_store_csv_file(path_to_store_dir, dic_tuples_store, dic_tuples_store_ho
     return dic_tuples_store, dic_tuples_store_hours, dic_tuples_user
 
 
-def read_games_csv_file(path_to_game_dir, dic_tuples_games, dic_tuples_store_game):
+def read_games_csv_file(path_to_game_dir, dic_tuples_games, dic_tuples_game_genre, dic_tuples_store_game):
     # For games csv files
     with open(path_to_game_dir, newline='', encoding="utf-8") as csvfile:
         csv_reader = csv.reader(csvfile, delimiter=',', quotechar='"')
@@ -50,20 +50,25 @@ def read_games_csv_file(path_to_game_dir, dic_tuples_games, dic_tuples_store_gam
             store_id = row[1]
             game_name = row[2]
             release_date = row[3]
-            genre = row[4] #TODO: Maybe genre could be a list.
+            list_genre = row[4].split(",")
             num_of_players = row[5]
             type_of_machine = row[6]
             game_cost = row[7]
             
-            dic_tuples_games[game_id] = (game_id, game_name, release_date, genre, num_of_players, type_of_machine)
+            dic_tuples_games[game_id] = (game_id, game_name, release_date, num_of_players, type_of_machine)
+
+            dic_tuples_game_genre[game_id] = []
+            for genre in list_genre:
+                dic_tuples_game_genre[game_id].append((game_id, genre.strip()))
 
             dic_tuples_store_game[game_id] = (store_id, game_id, game_cost)
+
 
 
     return dic_tuples_games, dic_tuples_store_game
 
 
-def insert_table(store_dir, game_dir, config_file, store_table, games_table, store_game_table, store_hours_table, user_table):
+def insert_table(store_dir, game_dir, config_file, store_table, games_table, game_genre_table, store_game_table, store_hours_table, user_table):
     """
     This method takes in the config file path and list of table descriptions and creates tables
     @param lst_table_descriptions: list of table descriptions
@@ -78,6 +83,7 @@ def insert_table(store_dir, game_dir, config_file, store_table, games_table, sto
     cursor_object = data_base.cursor()
     dic_tuples_store = {}
     dic_tuples_games = {}
+    dic_tuples_game_genre = {}
     dic_tuples_store_game = {}
     dic_tuples_store_hours = {}
     dic_tuples_user = {}
@@ -90,7 +96,7 @@ def insert_table(store_dir, game_dir, config_file, store_table, games_table, sto
     # Search through the games csv files
     for game_csv_file in os.listdir(game_dir):
         dic_tuples_games, dic_tuples_store_game = \
-           read_games_csv_file(game_dir + game_csv_file, dic_tuples_games, dic_tuples_store_game)
+           read_games_csv_file(game_dir + game_csv_file, dic_tuples_games, dic_tuples_game_genre, dic_tuples_store_game)
         
     # Populate store table
     for store_id in dic_tuples_store:
@@ -110,8 +116,14 @@ def insert_table(store_dir, game_dir, config_file, store_table, games_table, sto
         
     # Populate games table
     for game_id in dic_tuples_games:
-        cursor_object.execute("INSERT INTO "+games_table+" (game_id, game_name, release_date, genre, num_of_players, type_of_machine)"
-                                "values (%s, %s, %s, %s, %s, %s)", (dic_tuples_games[game_id]))
+        cursor_object.execute("INSERT INTO "+games_table+" (game_id, game_name, release_date, num_of_players, type_of_machine)"
+                                "values (%s, %s, %s, %s, %s)", (dic_tuples_games[game_id]))
+    
+    # Populate game_genre table
+    for game_id in dic_tuples_game_genre:
+        for genre in dic_tuples_game_genre[game_id]:
+            cursor_object.execute("INSERT INTO "+game_genre_table+" (game_id, genre)"
+                                    "values (%s, %s)", (genre))
         
     # Populate store_game table
     for store_id in dic_tuples_store_game:
@@ -125,4 +137,4 @@ def insert_table(store_dir, game_dir, config_file, store_table, games_table, sto
 
 path_to_game_dir = "game_data/"
 path_to_store_dir = "store_data/"
-insert_table(path_to_store_dir, path_to_game_dir, "connectorConfig.json", "store", "games", "store_game", "store_hours", "user")
+insert_table(path_to_store_dir, path_to_game_dir, "connectorConfig.json", "store", "games", "game_genre", "store_game", "store_hours", "user")
