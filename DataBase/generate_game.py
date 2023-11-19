@@ -7,12 +7,14 @@ import csv
 fake = Faker()
 used_ids = set()
 used_game_names = set()
+reserved_set = {1,2,5,6,8,100}
 
-
+# this function generates a random game ID, besides 1,2,5,6,8,100
+#these numbers are reserved
 def generate_game_ID():
     while True:
-        game_id = fake.random_int(min=1, max=9999)  
-        if game_id not in used_ids:
+        game_id = random.randint(1, 1000000)
+        if game_id not in used_ids and game_id not in reserved_set:
             used_ids.add(game_id)
             return game_id
         
