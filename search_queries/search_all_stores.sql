@@ -1,1 +1,1 @@
-SELECT * FROM store;
+SELECT store_name FROM store;
