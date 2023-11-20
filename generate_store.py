@@ -171,7 +171,7 @@ def get_existing_user():
 
 def write_store_to_csv(store_id, store_name, store_website, store_city, store_address, store_weekdays, store_open_hour, store_close_hour, user_data):
     # Check if the store_data folder exists, create it if it doesn't
-    if not os.path.exists('store_data'):
+    """if not os.path.exists('store_data'):
         os.makedirs('store_data')
 
     # Check if the store.csv file exists, create it if it doesn't
@@ -179,7 +179,7 @@ def write_store_to_csv(store_id, store_name, store_website, store_city, store_ad
         with open('store_data/store.csv', 'a', newline='') as csvfile:
             fieldnames = ['Store_id', 'Store_name', 'Store_website', 'Store_city', 'Store_address', 'Store_weekdays', 'Store_open_hour', 'Store_close_hour', 'User_id', 'User_first_name', 'User_last_name', 'User_email']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-            writer.writeheader()
+            writer.writeheader()"""
     
     #if not os.path.exists('store_data/user.csv'):
     #    with open('store_data/user.csv', 'w', newline='') as csvfile:
@@ -187,7 +187,7 @@ def write_store_to_csv(store_id, store_name, store_website, store_city, store_ad
     #        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     #        writer.writeheader()
 
-    with open('store_data/store.csv', 'a', newline='') as csvfile:
+    """with open('store_data/store.csv', 'a', newline='') as csvfile:
         fieldnames = ['Store_id', 'Store_name', 'Store_website', 'Store_city', 'Store_address', 'Store_weekdays', 'Store_open_hour', 'Store_close_hour', 'User_id', 'User_first_name', 'User_last_name', 'User_email']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
@@ -208,30 +208,53 @@ def write_store_to_csv(store_id, store_name, store_website, store_city, store_ad
         }
 
         # Write the store data
-        writer.writerow(store_data)
+        writer.writerow(store_data)"""
 
 def generate_and_write_stores(num_stores):
-    for i in range(num_stores):
-        if random.randint(1, 20) == 1:
-            # print(f"Store {i+1}: Attempting to reuse existing user")
-            user_data = get_existing_user()
-            if user_data is None:  
-                # print(f"Store {i+1}: No existing user found, generating a new one")
-                user_id, firstname, lastname, email = call_generate_user()
-                user_data = {'User_id': user_id, 'User_first_name': firstname, 'User_last_name': lastname, 'User_email': email}
-                generate_user.write_user_to_csv(user_id, firstname, lastname, email)
-            else:
-                # print(f"Store {i+1}: Reusing user: {user_data['User_id']}")
-                pass
-        else:
-            # print(f"Store {i+1}: Generating new user")
-            user_id, firstname, lastname, email = call_generate_user()
-            user_data = {'User_id': user_id, 'User_first_name': firstname, 'User_last_name': lastname, 'User_email': email}
-            generate_user.write_user_to_csv(user_id, firstname, lastname, email)
+    with open('store_data/store.csv', 'w', newline='') as csvfile:
+        with open('user.csv', 'w', newline='') as user_csvfile:
+            for i in range(num_stores):
+                if random.randint(1, 20) == 1:
+                    # print(f"Store {i+1}: Attempting to reuse existing user")
+                    user_data = get_existing_user()
+                    if user_data is None:  
+                        # print(f"Store {i+1}: No existing user found, generating a new one")
+                        user_id, firstname, lastname, email = call_generate_user()
+                        user_data = {'User_id': user_id, 'User_first_name': firstname, 'User_last_name': lastname, 'User_email': email}
+                        generate_user.write_user_to_csv(user_id, firstname, lastname, email, user_csvfile)
+                    else:
+                        # print(f"Store {i+1}: Reusing user: {user_data['User_id']}")
+                        pass
+                else:
+                    # print(f"Store {i+1}: Generating new user")
+                    user_id, firstname, lastname, email = call_generate_user()
+                    user_data = {'User_id': user_id, 'User_first_name': firstname, 'User_last_name': lastname, 'User_email': email}
+                    generate_user.write_user_to_csv(user_id, firstname, lastname, email, user_csvfile)
 
-        store_id, store_name, store_website, store_city, store_address, store_weekdays, store_open_hour, store_close_hour = generate_store_data(used_ids, used_website)
-        write_store_to_csv(store_id, store_name, store_website, store_city, store_address, store_weekdays, store_open_hour, store_close_hour, user_data)
-        # print(f"Store {i+1}: Store data written to CSV")
+                store_id, store_name, store_website, store_city, store_address, store_weekdays, store_open_hour, store_close_hour = generate_store_data(used_ids, used_website)
+                #write_store_to_csv(store_id, store_name, store_website, store_city, store_address, store_weekdays, store_open_hour, store_close_hour, user_data)fieldnames = ['Store_id', 'Store_name', 'Store_website', 'Store_city', 'Store_address', 'Store_weekdays', 'Store_open_hour', 'Store_close_hour', 'User_id', 'User_first_name', 'User_last_name', 'User_email']
+                fieldnames = ['Store_id', 'Store_name', 'Store_website', 'Store_city', 'Store_address', 'Store_weekdays', 'Store_open_hour', 'Store_close_hour', 'User_id', 'User_first_name', 'User_last_name', 'User_email']
+                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+                # Prepare the store data
+                store_data = {
+                    'Store_id': store_id,
+                    'Store_name': store_name,
+                    'Store_website': store_website,
+                    'Store_city': store_city,
+                    'Store_address': store_address,
+                    'Store_weekdays': ', '.join(store_weekdays),
+                    'Store_open_hour': store_open_hour,
+                    'Store_close_hour': store_close_hour,
+                    'User_id': user_data['User_id'],
+                    'User_first_name': user_data['User_first_name'],
+                    'User_last_name': user_data['User_last_name'],
+                    'User_email': user_data['User_email']
+                }
+
+                # Write the store data
+                writer.writerow(store_data)
+                # print(f"Store {i+1}: Store data written to CSV")
 
 # generate and write n stores
 generate_and_write_stores(1000)
