@@ -117,7 +117,7 @@ def insert_table(store_dir, game_dir, config_file, store_table, games_table, gam
         
     # Populate games table
     for game_id in tqdm(dic_tuples_games):
-        cursor_object.execute("INSERT INTO "+games_table+" (game_id, game_name, release_date, num_of_players, type_of_machine)"
+        cursor_object.execute("INSERT INTO "+games_table+" (game_id, game_name, release_date, num_of_players, type_of_machine, game_cost)"
                                 "values (%s, %s, %s, %s, %s, %s)", (dic_tuples_games[game_id]))
     
     # Populate game_genre table
@@ -128,7 +128,7 @@ def insert_table(store_dir, game_dir, config_file, store_table, games_table, gam
         
     # Populate store_game table
     for store_id in tqdm(dic_tuples_store_game):
-        cursor_object.execute("INSERT INTO "+store_game_table+" (store_id, game_id, game_cost)"
+        cursor_object.execute("INSERT INTO "+store_game_table+" (store_id, game_id)"
                                 "values (%s, %s)", (dic_tuples_store_game[store_id]))
 
     data_base.commit()
