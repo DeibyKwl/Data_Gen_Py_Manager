@@ -3,7 +3,6 @@ import mysql.connector
 import random
 import re
 import csv
-import game_data
 import os
 
 fake = Faker()
@@ -36,9 +35,9 @@ def retrieve_store_ID():
 
 def generate_game_name(n):
 # lists of words to make names from
-    adjectives = ["Galaxy", "Neon", "Cyber", "Asteroid", "Pixel", "Laser", "Robo", "Space", "Mystic", "Alien", "Retro", "Crystal", "Jungle", "Time", "Cosmic", "Phantom", "Monster", "Electric", "Sky" , "House of the"]
-    nouns = ["Invaders", "Racer", "Ninja", "Blaster", "Pirate", "Quest", "Rebellion", "Warp", "Dragon", "Wizard", "Assault", "Rocket", "Cavern", "Jumper", "Traveler", "Combat", "Fighter", "Mash", "Maze", "Surfer"]
-    suffixes = ["3000", "Xtreme", "Showdown", "Pro", "Adventure", "Odyssey", "Saga", "Challenge", "Quest", "Wars", "Force", "Racers", "Escape", "Mania", "Trials", "League", "Elite", "Mayhem", "Escape", "Showdown"]
+    adjectives = ["Infinity", "Skyward", "Digital", "Virtual", "Galaxy", "Neon", "Cyber", "Asteroid", "Pixel", "Laser", "Robo", "Space", "Mystic", "Alien", "Retro", "Crystal", "Jungle", "Time", "Cosmic", "Phantom", "Monster", "Electric", "Sky" , "House of the"]
+    nouns = ["Colossus", "Explorer", "Vortex", "Fury", "Invaders", "Racer", "Ninja", "Blaster", "Pirate", "Quest", "Rebellion", "Warp", "Dragon", "Wizard", "Assault", "Rocket", "Cavern", "Jumper", "Traveler", "Combat", "Fighter", "Mash", "Maze", "Surfer", "Hero", "Avenger", "Maverick"]
+    suffixes = ["Surge", "Legends", "Genesis", "Chaos", "Evolution", "3000", "Xtreme", "Showdown", "Pro", "Adventure", "Odyssey", "Rampage", "Saga", "Challenge", "Quest", "Wars", "Force", "Racers", "Escape", "Mania", "Trials", "League", "Elite", "Mayhem", "Escape", "Showdown"]
 
     game_names = []
     while len(game_names) < n:
@@ -117,5 +116,5 @@ def write_to_cvs (used_ids, used_game_names, num_games):
             writer.writerow({'game_id': game_id, 'store_id': store_id, 'game_name': game_name, 'release_date': release_date, 'game_genre': game_genre,  'num_players': num_players, 'type_of_machine': type_of_machine, 'game_price': game_price})
 
 
-generate_and_write_games(1000)
+generate_and_write_games(5000)
 
