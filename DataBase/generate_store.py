@@ -7,6 +7,7 @@ import datetime
 import generate_user
 # from id_manager import generate_unique_user_id
 import os
+import os
 
 
 fake = Faker()
@@ -33,12 +34,41 @@ def generate_store_id(used_ids):
 #function to generate random store(arcade) names
 def generate_store_name():
     # Lists of themed words
-    adjectives = ['Glowing', 'Golden', 'Time-Warp', 'Mystic', 'Retro', 'Virtual', 'Neon', 'Pixelated', 'Retro', 'Electric', 'Cosmic', 'Digital', 'Cyber', 'High Voltage', 'Laser', 'Dry-Dry', 'Arcane', 'Enchanted', 'Epic', 'Fantastic', 'Magical', 'Mythical', 'Legendary', 'Spectacular', 'Wonderful']
-    nouns = ['Joystick', 'Pixel', 'Quest', 'Playground', 'Realm', 'Night', 'Domain', 'Dungeon', 'Kingdom', 'Empire', 'Emporium', 'Asylum', 'Haven', 'Station', 'Loft', 'Groove', 'Refuge', 'Den', 'Club', 'Garage', 'Alley', 'Circuit', 'Zone', 'Galaxy', 'Oasis', 'Lab', 'Labrynth', 'Matrix', 'Dimension', 'Expanse', 'Sanctuary']
+    adjectives = [
+        'Glowing', 'Golden', 'Time-Warp', 'Mystic', 'Retro', 'Virtual', 'Neon', 'Pixelated', 'Electric', 
+        'Cosmic', 'Digital', 'Cyber', 'High Voltage', 'Laser', 'Dry-Dry', 'Arcane', 'Enchanted', 'Epic', 'Fantastic', 
+        'Magical', 'Mythical', 'Legendary', 'Spectacular', 'Wonderful', 'World', 'Planet', 'Base', 'Portal', 'Chamber', 
+        'Domain', 'Terminal', 'Blazing', 'Stellar', 'Thundering', 'Infinity', 'Quantum', 'Neon-Lit', 'Turbocharged', 
+        'Galactic', 'Interstellar', 'Flashing', 'Shimmering', 'Radiant', 'Illustrious', 'Twinkling', 'Phantom', 
+        'Dazzling', 'Prismatic', 'Hyper', 'Virtual', 'Cosmic', 'Astral', 'Dynamic', 'Kinetic', 'Invincible', 'Sonic', 
+        'Ultra', 'Mega', 'Supercharged', 'Hypersonic', 'Nova', 'Eclipse', 'Starlit', 'Moonlit', 'Sunlit', 'Luminous', 
+        'Vibrant', 'Sparkling', 'Hologram', 'Futuristic', 'Celestial', 'Meteoric', 'Solar', 'Lunar', 'Astro', 'Nebula', 
+        'Pulsar', 'Polaris', 'Interdimensional', 'Twilight', 'Dawn', 'Dusk', 'Aurora', 'Zenith'
+    ]
+
+    nouns = [
+        'Joystick', 'Pixel', 'Quest', 'Playground', 'Realm', 'Night', 'Domain', 'Dungeon', 'Kingdom', 'Empire', 
+        'Emporium', 'Asylum', 'Haven', 'Station', 'Loft', 'Groove', 'Refuge', 'Den', 'Club', 'Garage', 'Alley', 
+        'Circuit', 'Zone', 'Galaxy', 'Oasis', 'Lab', 'Labrynth', 'Matrix', 'Dimension', 'Expanse', 'Sanctuary', 
+        'Nexus', 'Odyssey', 'Arena', 'Pavilion', 'Fortress', 'Hub', 'Parlor', 'World', 'Planet', 'Base', 'Portal', 
+        'Chamber', 'Domain', 'Terminal', 'Complex', 'Center', 'Sphere', 'Gateway', 'Coliseum', 'Hangout', 'Lounge', 
+        'Suite', 'Lair', 'Hideout', 'Shelter', 'Shrine', 'Vault', 'Plaza', 'Terrace', 'Domain', 'Grotto', 'Citadel', 
+        'Castle', 'Palace', 'Garden', 'Grove', 'Island', 'Tower', 'Spire', 'Keep', 'Estate', 'Pavilion', 'Realm', 
+        'Waterscape', 'Dreamscape', 'Mindscape', 'Vortex', 'Horizon', 'Void', 'Chasm', 'Cosmos', 'Arcade', 
+        'Battleground', 'Beacon', 'Cove', 'Enclave', 'Gateway', 'Glade', 'Hinterland', 'Junction', 'Labyrinth', 
+        'Mirage', 'Observatory', 'Pinnacle', 'Retreat', 'Sanctum', 'Sphere', 'Thicket', 'Underworld', 'Vestibule', 
+        'Wonderland', 'Zenith'
+    ]
+
+    # Remove duplicates by converting to sets and back to lists
+    adjectives = list(set(adjectives))
+    nouns = list(set(nouns))
+
     # Randomly choose from each list
     chosen_adjective = random.choice(adjectives)
+    chosen_adjective2 = random.choice(adjectives)
     chosen_noun = random.choice(nouns)
-    storename = f'{chosen_adjective} {chosen_noun} Arcade'
+    storename = f'{chosen_adjective} {chosen_adjective2} {chosen_noun} Arcade'
     return storename
 
 #url should have something to do with the name of the store
@@ -121,32 +151,44 @@ def call_generate_user():
 # we need a function to determine if the user does not need to be generate and instead use an existing user
 #this should read all parts of the existing user.csv (User_id, User_first_name, User_last_name, User_email)
 def get_existing_user():
-    #  empty list to store all users
+    # Empty list to store all users
     users = []
 
-    #check user.csv for existing users
-    with open('user.csv', 'r', newline='') as csvfile:
+    # Check user.csv, inside the store_data folder for existing users
+    with open(os.path.join('store_data', 'user.csv'), 'r', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             users.append(row)
 
-    #  if the list is not empty
+    # If the list is not empty
     if users:
-        # random user from the list
+        # Random user from the list
         random_user = random.choice(users)
         return random_user
     else:
-        return None            
+        return None
 
 def write_store_to_csv(store_id, store_name, store_website, store_city, store_address, store_weekdays, store_open_hour, store_close_hour, user_data):
-    with open('store.csv', 'a', newline='') as csvfile:
+    # Check if the store_data folder exists, create it if it doesn't
+    if not os.path.exists('store_data'):
+        os.makedirs('store_data')
+
+    # Check if the store.csv file exists, create it if it doesn't
+    if not os.path.exists('store_data/store.csv'):
+        with open('store_data/store.csv', 'w', newline='') as csvfile:
+            fieldnames = ['Store_id', 'Store_name', 'Store_website', 'Store_city', 'Store_address', 'Store_weekdays', 'Store_open_hour', 'Store_close_hour', 'User_id', 'User_first_name', 'User_last_name', 'User_email']
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            writer.writeheader()
+    
+    if not os.path.exists('store_data/user.csv'):
+        with open('store_data/user.csv', 'w', newline='') as csvfile:
+            fieldnames = ['User_id', 'User_first_name', 'User_last_name', 'User_email']
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            writer.writeheader()
+
+    with open('store_data/store.csv', 'a', newline='') as csvfile:
         fieldnames = ['Store_id', 'Store_name', 'Store_website', 'Store_city', 'Store_address', 'Store_weekdays', 'Store_open_hour', 'Store_close_hour', 'User_id', 'User_first_name', 'User_last_name', 'User_email']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-
-        # Check if the file is empty to decide whether to write the header
-        csvfile.seek(0, os.SEEK_END)
-        if csvfile.tell() == 0:
-            writer.writeheader()
 
         # Prepare the store data
         store_data = {
@@ -191,4 +233,4 @@ def generate_and_write_stores(num_stores):
         # print(f"Store {i+1}: Store data written to CSV")
 
 # generate and write 20 stores
-generate_and_write_stores(75)
+generate_and_write_stores(50000)

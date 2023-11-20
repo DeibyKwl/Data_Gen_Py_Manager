@@ -41,7 +41,7 @@ def get_existing_user():
 
 #write the user to user.csv
 def write_user_to_csv(user_id, firstname, lastname, email):
-    with open('user.csv', 'a', newline='') as csvfile:
+    with open('store_data/user.csv', 'a', newline='') as csvfile:
         fieldnames = ['User_id', 'User_first_name', 'User_last_name', 'User_email']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         if csvfile.tell() == 0:
