@@ -4,6 +4,6 @@ CREATE TABLE IF NOT EXISTS user (
     first_name varchar(250),
     last_name varchar(250),
     email varchar(250),
-    PRIMARY KEY(user_id),
+    PRIMARY KEY(user_id, store_id),
     FOREIGN KEY(store_id) REFERENCES store(store_id)
 )
