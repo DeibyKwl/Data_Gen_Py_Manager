@@ -1,5 +1,0 @@
-﻿store_id,store_name,website,city,address,weekday,open_time,close_time,user_id,user_first_name,user_last_name,user_email
-1,Arcadia,www.arcadia.com,portland,9 Main St,"Monday,Tuesday,Wednesday,Thursday,Friday,Saturday",8:00:00,20:00:00,10,Gonzalez,Gutierrez,gonzalesgut@gmail.com
-2,Round One,www.round1.com,saco,10 lake St,"Sunday,Tuesday,Wednesday,Friday",10:00:00,17:00:00,2,Alan,Sarkosiano,sarkosianoalan@hotmail.com
-3,Retro Place,www.retroplace.com,scarborough,42 green St,Wednesday,15:00:00,5:00:00,1,John,Doe,johndoe@yahoo.com
-4,Games Here,www.gameshere.com,wells,100 John St,"Tuesday,Thursday,Sunday",12:00:00,8:00:00,6,Shohei ,Ohtani,shotani@angel.com

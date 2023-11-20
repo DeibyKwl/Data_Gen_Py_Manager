@@ -1,7 +1,0 @@
-﻿game_id,store_id,game_name,release_date,genre,num_of_players,type_of_machine,game_cost
-1,1,Metal Slug,1990,"Shooter, platform",1-4,arcade cabinet,0.5
-2,1,Mario Kart,2020,Racing,1-2,Wheel,3
-5,2,Dance dance revolution,1995,Rhythm,1-2,Dance Pad,5.5
-6,3,Pacman,1987,Maze,1,Arcade cabinet,0.25
-8,4,Donkey Kong,1983,Platform,1,Arcade cabinet,0.25
-100,3,Street Fighter,1990,Fight,1-2,Arcade cabinet,0.5
