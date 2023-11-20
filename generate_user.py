@@ -40,8 +40,8 @@ def get_existing_user():
     return random.choice(list(used_user_ids))
 
 #write the user to user.csv
-def write_user_to_csv(user_id, firstname, lastname, email):
-    with open('user.csv', 'a', newline='') as csvfile:
+def write_user_to_csv(user_id, firstname, lastname, email, csvfile):
+    #with open('user.csv', 'w', newline='') as csvfile:
         fieldnames = ['User_id', 'User_first_name', 'User_last_name', 'User_email']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         if csvfile.tell() == 0:
@@ -53,10 +53,10 @@ def write_user_to_csv(user_id, firstname, lastname, email):
             'User_email': email
         })
 
-#generate 5 users
+#generate n users
 def generate_and_write_users(num_users):
     for _ in range(num_users):
         user_id, firstname, lastname, email = generate_new_user()
         write_user_to_csv(user_id, firstname, lastname, email)
-
+            
 
