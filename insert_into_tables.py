@@ -56,13 +56,13 @@ def read_games_csv_file(path_to_game_dir, dic_tuples_games, dic_tuples_game_genr
             type_of_machine = row[6]
             game_cost = row[7]
             
-            dic_tuples_games[game_id] = (game_id, game_name, release_date, num_of_players, type_of_machine)
+            dic_tuples_games[game_id] = (game_id, game_name, release_date, num_of_players, type_of_machine, game_cost)
 
             dic_tuples_game_genre[game_id] = []
             for genre in list_genre:
                 dic_tuples_game_genre[game_id].append((game_id, genre.strip()))
 
-            dic_tuples_store_game[game_id] = (store_id, game_id, game_cost)
+            dic_tuples_store_game[game_id] = (store_id, game_id)
 
 
 
@@ -118,7 +118,7 @@ def insert_table(store_dir, game_dir, config_file, store_table, games_table, gam
     # Populate games table
     for game_id in tqdm(dic_tuples_games):
         cursor_object.execute("INSERT INTO "+games_table+" (game_id, game_name, release_date, num_of_players, type_of_machine)"
-                                "values (%s, %s, %s, %s, %s)", (dic_tuples_games[game_id]))
+                                "values (%s, %s, %s, %s, %s, %s)", (dic_tuples_games[game_id]))
     
     # Populate game_genre table
     for game_id in tqdm(dic_tuples_game_genre):
@@ -129,7 +129,7 @@ def insert_table(store_dir, game_dir, config_file, store_table, games_table, gam
     # Populate store_game table
     for store_id in tqdm(dic_tuples_store_game):
         cursor_object.execute("INSERT INTO "+store_game_table+" (store_id, game_id, game_cost)"
-                                "values (%s, %s, %s)", (dic_tuples_store_game[store_id]))
+                                "values (%s, %s)", (dic_tuples_store_game[store_id]))
 
     data_base.commit()
     cursor_object.close()
