@@ -3,6 +3,7 @@ import os
 
 import mysql.connector
 import json
+from tqdm import tqdm
 
 def read_store_csv_file(path_to_store_dir, dic_tuples_store, dic_tuples_store_hours, dic_tuples_user):
     # For store csv files
@@ -89,44 +90,44 @@ def insert_table(store_dir, game_dir, config_file, store_table, games_table, gam
     dic_tuples_user = {}
 
     # Search through the store csv files
-    for store_csv_file in os.listdir(store_dir):
+    for store_csv_file in tqdm(os.listdir(store_dir)):
         dic_tuples_store, dic_tuples_store_hours, dic_tuples_user = \
             read_store_csv_file(store_dir + store_csv_file, dic_tuples_store, dic_tuples_store_hours, dic_tuples_user)
     
     # Search through the games csv files
-    for game_csv_file in os.listdir(game_dir):
+    for game_csv_file in tqdm(os.listdir(game_dir)):
         dic_tuples_games, dic_tuples_store_game = \
            read_games_csv_file(game_dir + game_csv_file, dic_tuples_games, dic_tuples_game_genre, dic_tuples_store_game)
         
     # Populate store table
-    for store_id in dic_tuples_store:
+    for store_id in tqdm(dic_tuples_store):
         cursor_object.execute("INSERT INTO "+store_table+" (store_id, store_name, website, city, address)"
                                 "values (%s, %s, %s, %s, %s)", (dic_tuples_store[store_id]))
     
     # Populate store_hours table
-    for store_id in dic_tuples_store_hours:
+    for store_id in tqdm(dic_tuples_store_hours):
         for day_hour in dic_tuples_store_hours[store_id]:
             cursor_object.execute("INSERT INTO "+store_hours_table+" (store_id, weekday, open_time, close_time)"
                                     "values (%s, %s, %s, %s)", (day_hour))
 
     # Populate user table
-    for user_id in dic_tuples_user:
+    for user_id in tqdm(dic_tuples_user):
         cursor_object.execute("INSERT INTO "+user_table+" (user_id, store_id, first_name, last_name, email)"
                                 "values (%s, %s, %s, %s, %s)", (dic_tuples_user[user_id]))
         
     # Populate games table
-    for game_id in dic_tuples_games:
+    for game_id in tqdm(dic_tuples_games):
         cursor_object.execute("INSERT INTO "+games_table+" (game_id, game_name, release_date, num_of_players, type_of_machine)"
                                 "values (%s, %s, %s, %s, %s)", (dic_tuples_games[game_id]))
     
     # Populate game_genre table
-    for game_id in dic_tuples_game_genre:
+    for game_id in tqdm(dic_tuples_game_genre):
         for genre in dic_tuples_game_genre[game_id]:
             cursor_object.execute("INSERT INTO "+game_genre_table+" (game_id, genre)"
                                     "values (%s, %s)", (genre))
         
     # Populate store_game table
-    for store_id in dic_tuples_store_game:
+    for store_id in tqdm(dic_tuples_store_game):
         cursor_object.execute("INSERT INTO "+store_game_table+" (store_id, game_id, game_cost)"
                                 "values (%s, %s, %s)", (dic_tuples_store_game[store_id]))
 
