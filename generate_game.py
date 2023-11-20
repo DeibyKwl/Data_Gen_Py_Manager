@@ -85,11 +85,11 @@ def generate_and_write_games(num_games):
                 used_game_names.add(row['game_name'])
     except FileNotFoundError:
         pass
-    for _ in range (num_games):
-        write_to_cvs(used_ids, used_game_names)
+    #for _ in range (num_games):
+    write_to_cvs(used_ids, used_game_names, num_games)
 
 #we want to generate a csv for the games like with the generateStore.py
-def write_to_cvs (used_ids, used_game_names):
+def write_to_cvs (used_ids, used_game_names, num_games):
 
     store_ID = set()
 
@@ -99,9 +99,10 @@ def write_to_cvs (used_ids, used_game_names):
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
 
+        # Contain all stores_id and the will be randomly assigned to games
         store_ID = retrieve_store_ID()
 
-        for i in range(1, 11):
+        for i in range(num_games):
 
             # generate game data
             game_id = generate_game_ID()
@@ -116,5 +117,5 @@ def write_to_cvs (used_ids, used_game_names):
             writer.writerow({'game_id': game_id, 'store_id': store_id, 'game_name': game_name, 'release_date': release_date, 'game_genre': game_genre,  'num_players': num_players, 'type_of_machine': type_of_machine, 'game_price': game_price})
 
 
-generate_and_write_games(10)
+generate_and_write_games(1000)
 
