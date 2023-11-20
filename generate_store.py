@@ -155,7 +155,8 @@ def get_existing_user():
     users = []
 
     # Check user.csv, inside the store_data folder for existing users
-    with open(os.path.join('store_data', 'user.csv'), 'r', newline='') as csvfile:
+    #with open(os.path.join('store_data', 'user.csv'), 'r', newline='') as csvfile:
+    with open('user.csv', 'r', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             users.append(row)
@@ -175,16 +176,16 @@ def write_store_to_csv(store_id, store_name, store_website, store_city, store_ad
 
     # Check if the store.csv file exists, create it if it doesn't
     if not os.path.exists('store_data/store.csv'):
-        with open('store_data/store.csv', 'w', newline='') as csvfile:
+        with open('store_data/store.csv', 'a', newline='') as csvfile:
             fieldnames = ['Store_id', 'Store_name', 'Store_website', 'Store_city', 'Store_address', 'Store_weekdays', 'Store_open_hour', 'Store_close_hour', 'User_id', 'User_first_name', 'User_last_name', 'User_email']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()
     
-    if not os.path.exists('store_data/user.csv'):
-        with open('store_data/user.csv', 'w', newline='') as csvfile:
-            fieldnames = ['User_id', 'User_first_name', 'User_last_name', 'User_email']
-            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-            writer.writeheader()
+    #if not os.path.exists('store_data/user.csv'):
+    #    with open('store_data/user.csv', 'w', newline='') as csvfile:
+    #        fieldnames = ['User_id', 'User_first_name', 'User_last_name', 'User_email']
+    #        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    #        writer.writeheader()
 
     with open('store_data/store.csv', 'a', newline='') as csvfile:
         fieldnames = ['Store_id', 'Store_name', 'Store_website', 'Store_city', 'Store_address', 'Store_weekdays', 'Store_open_hour', 'Store_close_hour', 'User_id', 'User_first_name', 'User_last_name', 'User_email']
@@ -232,5 +233,5 @@ def generate_and_write_stores(num_stores):
         write_store_to_csv(store_id, store_name, store_website, store_city, store_address, store_weekdays, store_open_hour, store_close_hour, user_data)
         # print(f"Store {i+1}: Store data written to CSV")
 
-# generate and write 20 stores
-generate_and_write_stores(50000)
+# generate and write n stores
+generate_and_write_stores(1000)
