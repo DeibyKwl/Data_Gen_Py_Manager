@@ -35,7 +35,8 @@ def generate_game_name(n):
 
 def generate_game_genre():
     genres = ["Fighting", "Shooter", "Platformer", "Racing", "Puzzle", "Sport", "Beat 'em Up", "Light Gun Shooter", "Rhythm Game", "Pinball"]
-    return random.choice(genres)
+    num_genres = random.choices([1,2,3,4], [0.1, 0.2, 0.4, 0.3])[0]
+    return random.sample(genres, num_genres)
 
 # generate game price from .25 to 2.00 in increments of .25
 def generate_game_price():
@@ -49,6 +50,9 @@ def generate_num_players():
 def generate_release_date():
     return fake.date_between(start_date='-45y', end_date='today')
 
+def generate_type_of_machine():
+    type_of_machines = ["Arcade Cabinet", "Pinball Machine", "Racing Simulator", "Claw Machine", "Dance Dance Revolution Machine", "Foosball Table", "Guitar Arcade Unit", "Bubble Hockey Table", "Virtual Pinball Machine", "Arcade Boxing Machine", "Interactive Touchscreen", "Coin Pusher Machine", "Virtual Reality Arcade Pod", "Basketball Shooting Game"]
+    return random.choice(type_of_machines)
 
 # arcade_game_names = generate_game_name(10)
 # print (arcade_game_names)
@@ -70,21 +74,28 @@ def generate_and_write_games(num_games):
 
 #we want to generate a csv for the games like with the generateStore.py
 def write_to_cvs (used_ids, used_game_names):
-    # generate game data
-    game_id = generate_game_ID()
-    game_name = generate_game_name(1)
-    game_genre = generate_game_genre()
-    game_price = generate_game_price()
-    num_players = generate_num_players()
-    release_date = generate_release_date()
 
     # new game data to CVS 'game.csv'
     with open('game.csv', 'w', newline='') as csvfile:
-        fieldnames = ['game_id', 'game_name', 'game_genre', 'game_price', 'num_players', 'release_date']
+        fieldnames = ['game_id', 'game_name', 'release_date', 'game_genre', 'num_players', 'type_of_machine', 'game_price']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
         for i in range(1, 11):
-            writer.writerow({'game_id': generate_game_ID(), 'game_name': generate_game_name(1), 'game_genre': generate_game_genre(), 'game_price': generate_game_price(), 'num_players': generate_num_players(), 'release_date': generate_release_date()})
+
+            # generate game data
+            game_id = generate_game_ID()
+            game_name = ' '.join(generate_game_name(1))
+            game_genre = ', '.join(generate_game_genre())
+            game_price = generate_game_price()
+            num_players = generate_num_players()
+            release_date = generate_release_date()
+            type_of_machine = generate_type_of_machine()
+
+            writer.writerow({'game_id': game_id, 'game_name': game_name, 'release_date': release_date, 'game_genre': game_genre,  'num_players': num_players, 'type_of_machine': type_of_machine, 'game_price': game_price})
 
 
 generate_and_write_games(10)
+
+#for i in range(9):
+#    game_genre = ', '.join(generate_game_genre())
+#    print(game_genre)
