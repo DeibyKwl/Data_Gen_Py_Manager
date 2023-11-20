@@ -4,5 +4,6 @@ CREATE TABLE IF NOT EXISTS games (
     release_date int,
     num_of_players int, 
     type_of_machine varchar(250),
+    game_cost decimal(4,2),
     PRIMARY KEY(game_id)
 )
