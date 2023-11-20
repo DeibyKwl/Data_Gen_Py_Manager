@@ -61,9 +61,9 @@ def generate_game_price():
 def generate_num_players():
     return random.choice([1, 2, 4])
 
-# generate release date from 1975 to today
+# generate release year from 1975 to today
 def generate_release_date():
-    return fake.date_between(start_date='-45y', end_date='today')
+    return random.randint(1975, 2022)
 
 def generate_type_of_machine():
     type_of_machines = ["Arcade Cabinet", "Pinball Machine", "Racing Simulator", "Claw Machine", "Dance Dance Revolution Machine", "Foosball Table", "Guitar Arcade Unit", "Bubble Hockey Table", "Virtual Pinball Machine", "Arcade Boxing Machine", "Interactive Touchscreen", "Coin Pusher Machine", "Virtual Reality Arcade Pod", "Basketball Shooting Game"]
