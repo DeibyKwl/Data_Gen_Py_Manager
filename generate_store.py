@@ -1,12 +1,8 @@
 from faker import Faker
-import mysql.connector
 import random
 import re
 import csv
-import datetime
 import generate_user
-# from id_manager import generate_unique_user_id
-import os
 import os
 
 
@@ -169,47 +165,7 @@ def get_existing_user():
     else:
         return None
 
-def write_store_to_csv(store_id, store_name, store_website, store_city, store_address, store_weekdays, store_open_hour, store_close_hour, user_data):
-    # Check if the store_data folder exists, create it if it doesn't
-    """if not os.path.exists('store_data'):
-        os.makedirs('store_data')
-
-    # Check if the store.csv file exists, create it if it doesn't
-    if not os.path.exists('store_data/store.csv'):
-        with open('store_data/store.csv', 'a', newline='') as csvfile:
-            fieldnames = ['Store_id', 'Store_name', 'Store_website', 'Store_city', 'Store_address', 'Store_weekdays', 'Store_open_hour', 'Store_close_hour', 'User_id', 'User_first_name', 'User_last_name', 'User_email']
-            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-            writer.writeheader()"""
-    
-    #if not os.path.exists('store_data/user.csv'):
-    #    with open('store_data/user.csv', 'w', newline='') as csvfile:
-    #        fieldnames = ['User_id', 'User_first_name', 'User_last_name', 'User_email']
-    #        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-    #        writer.writeheader()
-
-    """with open('store_data/store.csv', 'a', newline='') as csvfile:
-        fieldnames = ['Store_id', 'Store_name', 'Store_website', 'Store_city', 'Store_address', 'Store_weekdays', 'Store_open_hour', 'Store_close_hour', 'User_id', 'User_first_name', 'User_last_name', 'User_email']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-
-        # Prepare the store data
-        store_data = {
-            'Store_id': store_id,
-            'Store_name': store_name,
-            'Store_website': store_website,
-            'Store_city': store_city,
-            'Store_address': store_address,
-            'Store_weekdays': ', '.join(store_weekdays),
-            'Store_open_hour': store_open_hour,
-            'Store_close_hour': store_close_hour,
-            'User_id': user_data['User_id'],
-            'User_first_name': user_data['User_first_name'],
-            'User_last_name': user_data['User_last_name'],
-            'User_email': user_data['User_email']
-        }
-
-        # Write the store data
-        writer.writerow(store_data)"""
-
+# Generate store and users, for later write them in a csv file.
 def generate_and_write_stores(num_stores):
     with open('store_data/store.csv', 'w', newline='') as csvfile:
         with open('user.csv', 'w', newline='') as user_csvfile:

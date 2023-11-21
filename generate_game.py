@@ -1,7 +1,5 @@
 from faker import Faker
-import mysql.connector
 import random
-import re
 import csv
 import os
 

@@ -1,8 +1,6 @@
 from faker import Faker
 import random
-import re
 import csv
-import datetime
 from id_manager import generate_unique_user_id
 
 
