@@ -75,8 +75,10 @@ $ pip3 install mysql-connector-python
 $ pip install tqdm
 
 # Run the project
-$ python generateStore.py
-$ python generateUser.py
+$ python db_starter.py
+$ python generate_store.py
+$ python generate_game.py
+$ insert_into_tables.py
 
 # The generated data will be available in the specified output directories
 ```
