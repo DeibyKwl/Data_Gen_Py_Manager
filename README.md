@@ -75,6 +75,7 @@ $ python generateStore.py
 $ python generateUser.py
 
 # The generated data will be available in the specified output directories
+```
 
 ## :memo: License ##
 
