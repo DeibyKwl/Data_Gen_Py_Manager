@@ -9,9 +9,6 @@
 <h1 align="center">Data_Gen_Py_Manager</h1>
 
 <p align="center">
-  <img alt="Github top language" src="https://img.shields.io/github/languages/top/DeibyKwl/Data_Gen_Py_Manager?color=56BEB8">
-
-  <img alt="Github language count" src="https://img.shields.io/github/languages/count/DeibyKwl/Data_Gen_Py_Manager?color=56BEB8">
 
   <img alt="Repository size" src="https://img.shields.io/github/repo-size/DeibyKwl/Data_Gen_Py_Manager?color=56BEB8">
 
@@ -31,12 +28,31 @@ This project, Data_Gen_Py_Manager, consists of Python scripts designed to genera
 :heavy_check_mark: Produce diverse arcade game data including names, genres, prices, and types of machines;\
 :heavy_check_mark: Write all generated data to CSV files for easy import and use in various applications.
 
+## :wrench: SQL Database Integration ##
+
+Included in the project are SQL scripts located in the `search_queries` directory which facilitate the management of the generated CSV data within a SQL database. These scripts allow for:
+
+- Creating tables corresponding to the generated CSV structure.
+- Inserting generated data into the database.
+- Performing search operations through predefined SQL queries.
+- Counting, searching, and organizing data based on various attributes such as genre, cost, and more.
+
+To use these SQL scripts:
+
+1. Create your database and set it up according to your SQL server.
+2. Execute the `table_*.sql` scripts to create the necessary tables.
+3. Use the `insert_into_tables.py` script to populate the database with the data from CSV files.
+4. Utilize the search query scripts to retrieve or manipulate data as needed.
+
 ## :rocket: Technologies ##
 
 The following tools were used in this project:
 
-- [Python](https://www.python.org/)
-- [Faker](https://faker.readthedocs.io/en/master/)
+
+- [Python](https://www.python.org/) for the main scripting language.
+- [Faker](https://faker.readthedocs.io/en/master/) for generating fake data.
+- [MySQL Workbench](https://www.mysql.com/products/workbench/) for database design, administration, and SQL development.
+- SQL for defining and manipulating data in the database.
 
 ## :white_check_mark: Requirements ##
 
@@ -60,11 +76,10 @@ $ python generateUser.py
 
 # The generated data will be available in the specified output directories
 
+## :memo: License ##
+
+This project is under license from MIT. For more details, see the [LICENSE](LICENSE.md) file.
+
 Made with :heart: by <a href="https://github.com/DeibyKwl" target="_blank">Deiby Wu</a> and <a href="https://github.com/alexo75" target="_blank">Alex O'Neill</a>
- 
-:memo: License
-
-This project is under license from MIT. For more details, see the LICENSE file.
-
 
 <a href="#top">Back to top</a>
