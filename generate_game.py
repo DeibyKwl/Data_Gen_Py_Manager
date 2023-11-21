@@ -49,7 +49,7 @@ def generate_game_name(n):
     return game_names
 
 def generate_game_genre():
-    genres = ["Fighting", "Shooter", "Platformer", "Racing", "Puzzle", "Sport", "Beat 'em Up", "Light Gun Shooter", "Rhythm Game", "Pinball"]
+    genres = ["Fighting", "Shooter", "Platformer", "Racing", "Puzzle", "Sport", "Beat 'em Up", "Light Gun Shooter", "Rhythm Game", "Pinball", "Maze"]
     num_genres = random.choices([1,2,3,4], [0.1, 0.2, 0.4, 0.3])[0]
     return random.sample(genres, num_genres)
 
@@ -62,7 +62,7 @@ def generate_num_players():
     return random.choice([1, 2, 4])
 
 # generate release year from 1975 to today
-def generate_release_date():
+def generate_release_year():
     return random.randint(1975, 2022)
 
 def generate_type_of_machine():
@@ -71,7 +71,7 @@ def generate_type_of_machine():
 
 # arcade_game_names = generate_game_name(10)
 # print (arcade_game_names)
-# print(generate_release_date())
+# print(generate_release_year())
 
 def generate_and_write_games(num_games):
     used_ids = set()
@@ -94,7 +94,7 @@ def write_to_cvs (used_ids, used_game_names, num_games):
 
     # new game data to CVS 'game.csv'
     with open('game_data/game.csv', 'w', newline='') as csvfile:
-        fieldnames = ['game_id', 'store_id', 'game_name', 'release_date', 'game_genre', 'num_players', 'type_of_machine', 'game_price']
+        fieldnames = ['game_id', 'store_id', 'game_name', 'release_year', 'game_genre', 'num_players', 'type_of_machine', 'game_price']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
 
@@ -110,11 +110,10 @@ def write_to_cvs (used_ids, used_game_names, num_games):
             game_genre = ', '.join(generate_game_genre())
             game_price = generate_game_price()
             num_players = generate_num_players()
-            release_date = generate_release_date()
+            release_year = generate_release_year()
             type_of_machine = generate_type_of_machine()
 
-            writer.writerow({'game_id': game_id, 'store_id': store_id, 'game_name': game_name, 'release_date': release_date, 'game_genre': game_genre,  'num_players': num_players, 'type_of_machine': type_of_machine, 'game_price': game_price})
+            writer.writerow({'game_id': game_id, 'store_id': store_id, 'game_name': game_name, 'release_year': release_year, 'game_genre': game_genre,  'num_players': num_players, 'type_of_machine': type_of_machine, 'game_price': game_price})
 
 
-generate_and_write_games(5000)
-
+generate_and_write_games(10000)
