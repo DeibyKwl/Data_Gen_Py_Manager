@@ -6,5 +6,5 @@ WITH cost_total (store_name, value) AS
 cost_total_avg (value) AS 
 	(SELECT AVG(value) FROM cost_total)
 
-SELECT store_name FROM cost_total, cost_total_avg
+SELECT store_name, cost_total.value FROM cost_total, cost_total_avg
 WHERE cost_total.value < cost_total_avg.value;
