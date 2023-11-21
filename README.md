@@ -52,6 +52,8 @@ The following tools were used in this project:
 - [Python](https://www.python.org/) for the main scripting language.
 - [Faker](https://faker.readthedocs.io/en/master/) for generating fake data.
 - [MySQL Workbench](https://www.mysql.com/products/workbench/) for database design, administration, and SQL development.
+- [TQDM](https://github.com/tqdm/tqdm/) Instantly make your loops show a progress meter.
+
 - SQL for defining and manipulating data in the database.
 
 ## :white_check_mark: Requirements ##
@@ -69,6 +71,8 @@ $ cd Data_Gen_Py_Manager
 
 # Install dependencies
 $ pip install faker
+$ pip3 install mysql-connector-python
+$ pip install tqdm
 
 # Run the project
 $ python generateStore.py
