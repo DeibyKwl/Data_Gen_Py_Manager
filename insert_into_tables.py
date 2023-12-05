@@ -136,6 +136,6 @@ def insert_table(store_dir, game_dir, config_file, store_table, games_table, gam
 
 
 
-path_to_game_dir = "game_data/"
-path_to_store_dir = "store_data/"
+path_to_game_dir = "generated_data/game_data/"
+path_to_store_dir = "generated_data/store_data/"
 insert_table(path_to_store_dir, path_to_game_dir, "connectorConfig.json", "store", "games", "game_genre", "store_game", "store_hours", "user")

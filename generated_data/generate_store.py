@@ -2,8 +2,7 @@ from faker import Faker
 import random
 import re
 import csv
-import generate_user
-import os
+import generated_data.generate_user as user_gen
 
 
 fake = Faker()
@@ -141,7 +140,7 @@ def generate_store_data(used_ids, used_websites):
 
 #we need to generate the user data for the store.csv
 def call_generate_user():
-    user_id, firstname, lastname, email = generate_user.generate_new_user()
+    user_id, firstname, lastname, email = user_gen.generate_new_user()
     return user_id, firstname, lastname, email
 
 # we need a function to determine if the user does not need to be generate and instead use an existing user
@@ -152,7 +151,7 @@ def get_existing_user():
 
     # Check user.csv, inside the store_data folder for existing users
     #with open(os.path.join('store_data', 'user.csv'), 'r', newline='') as csvfile:
-    with open('user.csv', 'r', newline='') as csvfile:
+    with open('generated_data/user_data/user.csv', 'r', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             users.append(row)
@@ -167,8 +166,8 @@ def get_existing_user():
 
 # Generate store and users, for later write them in a csv file.
 def generate_and_write_stores(num_stores):
-    with open('store_data/store.csv', 'w', newline='') as csvfile:
-        with open('user.csv', 'w', newline='') as user_csvfile:
+    with open('generated_data/store_data/store.csv', 'w', newline='') as csvfile:
+        with open('generated_data/user_data/user.csv', 'w', newline='') as user_csvfile:
             for i in range(num_stores):
                 if random.randint(1, 20) == 1:
                     # print(f"Store {i+1}: Attempting to reuse existing user")
@@ -177,7 +176,7 @@ def generate_and_write_stores(num_stores):
                         # print(f"Store {i+1}: No existing user found, generating a new one")
                         user_id, firstname, lastname, email = call_generate_user()
                         user_data = {'User_id': user_id, 'User_first_name': firstname, 'User_last_name': lastname, 'User_email': email}
-                        generate_user.write_user_to_csv(user_id, firstname, lastname, email, user_csvfile)
+                        user_gen.write_user_to_csv(user_id, firstname, lastname, email, user_csvfile)
                     else:
                         # print(f"Store {i+1}: Reusing user: {user_data['User_id']}")
                         pass
@@ -185,7 +184,7 @@ def generate_and_write_stores(num_stores):
                     # print(f"Store {i+1}: Generating new user")
                     user_id, firstname, lastname, email = call_generate_user()
                     user_data = {'User_id': user_id, 'User_first_name': firstname, 'User_last_name': lastname, 'User_email': email}
-                    generate_user.write_user_to_csv(user_id, firstname, lastname, email, user_csvfile)
+                    user_gen.write_user_to_csv(user_id, firstname, lastname, email, user_csvfile)
 
                 store_id, store_name, store_website, store_city, store_address, store_weekdays, store_open_hour, store_close_hour = generate_store_data(used_ids, used_website)
                 #write_store_to_csv(store_id, store_name, store_website, store_city, store_address, store_weekdays, store_open_hour, store_close_hour, user_data)fieldnames = ['Store_id', 'Store_name', 'Store_website', 'Store_city', 'Store_address', 'Store_weekdays', 'Store_open_hour', 'Store_close_hour', 'User_id', 'User_first_name', 'User_last_name', 'User_email']
@@ -213,4 +212,4 @@ def generate_and_write_stores(num_stores):
                 # print(f"Store {i+1}: Store data written to CSV")
 
 # generate and write n stores
-generate_and_write_stores(1000)
+#generate_and_write_stores(1000)

@@ -19,8 +19,8 @@ def generate_game_ID():
 
 def retrieve_store_ID():
     store_ids = set()
-    for store_csv_file in os.listdir('store_data/'):
-        with open('store_data/'+store_csv_file, newline='', encoding="utf-8") as csvfile:
+    for store_csv_file in os.listdir('generated_data/store_data/'):
+        with open('generated_data/store_data/'+store_csv_file, newline='', encoding="utf-8") as csvfile:
             csv_reader = csv.reader(csvfile, delimiter=',', quotechar='"')
             next(csv_reader)
 
@@ -91,7 +91,7 @@ def write_to_cvs (used_ids, used_game_names, num_games):
     store_ID = set()
 
     # new game data to CVS 'game.csv'
-    with open('game_data/game.csv', 'w', newline='') as csvfile:
+    with open('generated_data/game_data/game.csv', 'w', newline='') as csvfile:
         fieldnames = ['game_id', 'store_id', 'game_name', 'release_year', 'game_genre', 'num_players', 'type_of_machine', 'game_price']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
@@ -114,4 +114,4 @@ def write_to_cvs (used_ids, used_game_names, num_games):
             writer.writerow({'game_id': game_id, 'store_id': store_id, 'game_name': game_name, 'release_year': release_year, 'game_genre': game_genre,  'num_players': num_players, 'type_of_machine': type_of_machine, 'game_price': game_price})
 
 
-generate_and_write_games(10000)
+#generate_and_write_games(5000)

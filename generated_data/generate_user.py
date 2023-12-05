@@ -1,12 +1,21 @@
 from faker import Faker
 import random
 import csv
-from id_manager import generate_unique_user_id
 
 
 fake = Faker()
 used_user_ids = set()
 reserved_user_ids = {10,2,1,6}
+used_ids = set()
+
+# generate user id stored separately to avoid collisions
+def generate_unique_user_id():
+    global used_ids
+    while True:
+        new_id = random.randint(1, 1000000)
+        if new_id not in used_ids and new_id not in reserved_user_ids:
+            used_ids.add(new_id)
+            return new_id
 
 #make a first name
 def generate_firstname():
@@ -31,7 +40,7 @@ def generate_new_user():
 
 #generate a user from the existing user.csv
 def get_existing_user():
-    with open('user.csv', 'r', newline='') as csvfile:
+    with open('generated_data/user_data/user.csv', 'r', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             used_user_ids.add(int(row['User_id']))
