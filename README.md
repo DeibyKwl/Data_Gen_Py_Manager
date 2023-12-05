@@ -76,6 +76,7 @@ $ pip install tqdm
 
 # Run the project
 $ python db_starter.py
+$ python generate_data.py
 $ python insert_into_tables.py
 
 # The generated data will be available in the specified output directories
