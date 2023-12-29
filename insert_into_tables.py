@@ -101,34 +101,34 @@ def insert_table(store_dir, game_dir, config_file, store_table, games_table, gam
         
     # Populate store table
     for store_id in tqdm(dic_tuples_store):
-        cursor_object.execute("INSERT INTO "+store_table+" (store_id, store_name, website, city, address)"
+        cursor_object.execute("INSERT IGNORE INTO "+store_table+" (store_id, store_name, website, city, address)"
                                 "values (%s, %s, %s, %s, %s)", (dic_tuples_store[store_id]))
     
     # Populate store_hours table
     for store_id in tqdm(dic_tuples_store_hours):
         for day_hour in dic_tuples_store_hours[store_id]:
-            cursor_object.execute("INSERT INTO "+store_hours_table+" (store_id, weekday, open_time, close_time)"
+            cursor_object.execute("INSERT IGNORE INTO "+store_hours_table+" (store_id, weekday, open_time, close_time)"
                                     "values (%s, %s, %s, %s)", (day_hour))
 
     # Populate user table
     for user_id in tqdm(dic_tuples_user):
-        cursor_object.execute("INSERT INTO "+user_table+" (user_id, store_id, first_name, last_name, email)"
+        cursor_object.execute("INSERT IGNORE INTO "+user_table+" (user_id, store_id, first_name, last_name, email)"
                                 "values (%s, %s, %s, %s, %s)", (dic_tuples_user[user_id]))
         
     # Populate games table
     for game_id in tqdm(dic_tuples_games):
-        cursor_object.execute("INSERT INTO "+games_table+" (game_id, game_name, release_year, num_of_players, type_of_machine, game_cost)"
+        cursor_object.execute("INSERT IGNORE INTO "+games_table+" (game_id, game_name, release_year, num_of_players, type_of_machine, game_cost)"
                                 "values (%s, %s, %s, %s, %s, %s)", (dic_tuples_games[game_id]))
     
     # Populate game_genre table
     for game_id in tqdm(dic_tuples_game_genre):
         for genre in dic_tuples_game_genre[game_id]:
-            cursor_object.execute("INSERT INTO "+game_genre_table+" (game_id, genre)"
+            cursor_object.execute("INSERT IGNORE INTO "+game_genre_table+" (game_id, genre)"
                                     "values (%s, %s)", (genre))
         
     # Populate store_game table
     for store_id in tqdm(dic_tuples_store_game):
-        cursor_object.execute("INSERT INTO "+store_game_table+" (store_id, game_id)"
+        cursor_object.execute("INSERT IGNORE INTO "+store_game_table+" (store_id, game_id)"
                                 "values (%s, %s)", (dic_tuples_store_game[store_id]))
 
     data_base.commit()
